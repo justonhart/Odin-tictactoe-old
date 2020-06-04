@@ -58,7 +58,6 @@ const game = (()=> {
 
         for(let i = 0; i < 8; i++){
             let values = winStates[i].map(e => _gameState[e]);
-            console.log(values);
             if(values[0] !== null && values[0] === values[1] && values[0] === values[2]){
                 if(values[0] === "X"){
                     return {winner: 1, state: winStates[i]};
@@ -114,15 +113,18 @@ const displayController = (() => {
         switch(status.winner){
             case -1: 
                 //display tie screen
+                document.getElementById('header').innerText = "Tie game!";
                 _finalizeBoard(status.state);
                 break;
             case 1:
                 //display player one win and increase score
+                document.getElementById('header').innerText = `${_players.playerOne.getName()} wins!`;
                 _finalizeBoard(status.state);
                 _players.playerOne.incrementScore();
                 break;
             case 2:
                 //display player two win and increase score
+                document.getElementById('header').innerText = `${_players.playerTwo.getName()} wins!`;
                 _finalizeBoard(status.state);
                 _players.playerTwo.incrementScore();
                 break;
@@ -153,6 +155,7 @@ const displayController = (() => {
     }
 
     const resetGame = () => {
+        document.getElementById('header').innerText = `Tic-Tac-Toe!`;
         _gameBoard.forEach(space => {
             space.style.backgroundColor = 'white';
             space.innerText = "";
