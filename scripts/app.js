@@ -84,7 +84,7 @@ const game = (()=> {
 const displayController = (() => {
     let _gameBoard = document.querySelectorAll('.gameSpace');
     let _players = { playerOne: null, playerTwo: null};
-    let currentTurn;
+    let _currentTurn;
     let _gameActive;
 
     const startGame = () => {
@@ -104,11 +104,11 @@ const displayController = (() => {
     const _setPlayers = () => {
         _players.playerOne = Player(document.getElementById('nameOne').value, "X");
         _players.playerTwo = Player(document.getElementById('nameTwo').value, "O");
-        currentTurn = "playerOne";
+        _currentTurn = "playerOne";
     }
 
     const _updateBoard = (space) => {
-        _gameBoard[space].innerText = _players[currentTurn].getMark();
+        _gameBoard[space].innerText = _players[_currentTurn].getMark();
         let status = game.checkGameState();
         switch(status.winner){
             case -1: 
@@ -130,7 +130,7 @@ const displayController = (() => {
                 break;
             case 0:
                 //switch turns
-                currentTurn = (currentTurn === "playerOne" ? "playerTwo" : "playerOne");
+                _currentTurn = (_currentTurn === "playerOne" ? "playerTwo" : "playerOne");
                 break;
         }
     }
@@ -166,7 +166,7 @@ const displayController = (() => {
     }
 
     const _gameSpaceListener = () => {
-        if(_gameActive && game.updateGameState(event.target.id, _players[currentTurn].getMark())){
+        if(_gameActive && game.updateGameState(event.target.id, _players[_currentTurn].getMark())){
             _updateBoard(event.target.id);
         }
     }
